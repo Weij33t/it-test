@@ -1,58 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React from "react"
+import SplitPane, { Pane } from "react-split-pane-next"
+
+import "./App.css"
+import { useAppSelector } from "./app/hooks"
+import { Map } from "./components/Map/Map"
+import { Orders } from "./features/orders/Orders"
 
 function App() {
+  const error: string | undefined = useAppSelector(
+    (state) => state.orders.errorMessage,
+  )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  );
+    <>
+      {/* @ts-ignore */}
+      <SplitPane split="vertical">
+        {/* @ts-ignore */}
+        <Pane minSize={"200"}>
+          <Orders />
+        </Pane>
+        {/* @ts-ignore */}
+        <Pane>
+          <Map />
+        </Pane>
+      </SplitPane>
+      {error && <span className={"error"}>{error}</span>}
+    </>
+  )
 }
 
-export default App;
+export default App

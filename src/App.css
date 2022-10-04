@@ -1,3 +1,5 @@
+@import "~antd/dist/antd.css";
+
 .App {
   text-align: center;
 }
@@ -24,6 +26,17 @@
 
 .App-link {
   color: rgb(112, 76, 182);
+}
+
+.error {
+  padding: 15px 10px;
+  font-size: 20px;
+  font-weight: bold;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: red;
+  z-index: 10000;
 }
 
 @keyframes App-logo-float {
