@@ -33,6 +33,5 @@ module.exports = {
     "unused-imports/no-unused-imports": "error",
     "@typescript-eslint/no-unused-vars": "error",
     "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
   },
 }

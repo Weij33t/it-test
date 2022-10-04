@@ -3,11 +3,16 @@ import { TableRowSelection } from "antd/lib/table/interface"
 import React from "react"
 import { useEffect } from "react"
 
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { CitySelect } from "./CitySelect"
-import { IOrder, ordersActions, ordersSelectors } from "./ordersSlice"
+import { CitySelect } from "../../common/components/CitySelect"
+import { useAppDispatch, useAppSelector } from "../../common/hooks/hooks"
+import {
+  IOrder,
+  ordersActions,
+  ordersSelectors,
+} from "../../redux/orders/ordersSlice"
 
 export function Orders() {
+  const status = useAppSelector((state) => state.orders.fetchStatus)
   const orders = useAppSelector(ordersSelectors.orders)
   const selectedOrder = useAppSelector(ordersSelectors.selectedOrder)
   const dispatch = useAppDispatch()
@@ -16,12 +21,31 @@ export function Orders() {
     dispatch(ordersActions.loadOrders())
   }, [])
 
+  const onRowSelectionChange = (_: React.Key[], value: IOrder[]) =>
+    dispatch(ordersActions.setSelectedOrder(value[0]))
+
   const rowSelection: TableRowSelection<IOrder> = {
     type: "radio",
     selectedRowKeys: selectedOrder != null ? [selectedOrder] : [],
-    onChange: (_: React.Key[], value: IOrder[]) =>
-      dispatch(ordersActions.setSelectedOrder(value[0])),
+    onChange: onRowSelectionChange,
   }
+
+  const onFromChange = (from: number, order: IOrder) =>
+    dispatch(
+      ordersActions.changeOrderStart({
+        from,
+        id: order.id,
+      }),
+    )
+
+  const onToChange = (to: number, order: IOrder) =>
+    dispatch(
+      ordersActions.changeOrderFinish({
+        to,
+        id: order.id,
+      }),
+    )
+
   const columns = [
     {
       key: "name",
@@ -35,14 +59,7 @@ export function Orders() {
       render: (item: number, order: IOrder) => (
         <CitySelect
           item={item}
-          onChange={(from) =>
-            dispatch(
-              ordersActions.changeOrderStart({
-                from,
-                id: order.id,
-              }),
-            )
-          }
+          onChange={(from) => onFromChange(from, order)}
         />
       ),
     },
@@ -51,17 +68,7 @@ export function Orders() {
       title: "Куда",
       dataIndex: "to",
       render: (item: number, order: IOrder) => (
-        <CitySelect
-          item={item}
-          onChange={(to) =>
-            dispatch(
-              ordersActions.changeOrderFinish({
-                to,
-                id: order.id,
-              }),
-            )
-          }
-        />
+        <CitySelect item={item} onChange={(to) => onToChange(to, order)} />
       ),
     },
   ]
@@ -69,6 +76,7 @@ export function Orders() {
   return (
     <Table
       bordered
+      loading={status === "loading"}
       dataSource={orders}
       columns={columns}
       rowKey="id"

@@ -1,13 +1,15 @@
 import React from "react"
 import { MapContainer, TileLayer } from "react-leaflet"
 
-import { useAppSelector } from "../../app/hooks"
-import { RootState } from "../../app/store"
+import { useAppSelector } from "../../common/hooks/hooks"
 import {
   citySelector,
   selectedOrderSelector,
-} from "../../features/orders/ordersSlice"
+} from "../../redux/orders/ordersSlice"
+import { RootState } from "../../redux/store"
 import { RoutingMachine } from "./RoutingControl"
+
+const defaultCenter: [number, number] = [51, 51]
 
 export const Map = () => {
   const state: RootState = useAppSelector((state) => state)
@@ -17,7 +19,7 @@ export const Map = () => {
 
   const center: [number, number] = cityStart
     ? [cityStart.lat, cityStart.lng]
-    : [51, 51]
+    : defaultCenter
 
   return (
     <MapContainer style={{ height: "100vh" }} zoom={8} center={center}>

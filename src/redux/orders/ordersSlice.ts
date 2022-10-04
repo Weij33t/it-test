@@ -1,7 +1,7 @@
-import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit"
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 import { ICity } from "../../api/citiesApi"
-import { RootState } from "../../app/store"
+import { RootState } from "../store"
 
 export interface IOrder {
   name: string

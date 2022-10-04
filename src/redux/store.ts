@@ -1,13 +1,13 @@
 import {
   Action,
   AnyAction,
-  ThunkAction,
   configureStore,
+  ThunkAction,
 } from "@reduxjs/toolkit"
 import createSagaMiddleware from "redux-saga"
 
-import { ordersReducer } from "../features/orders/ordersSlice"
-import { ordersSaga } from "./ordersSaga"
+import { ordersSaga } from "./orders/ordersSaga"
+import { ordersReducer } from "./orders/ordersSlice"
 
 const sagaMiddleware = createSagaMiddleware()
 

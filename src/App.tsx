@@ -1,14 +1,16 @@
+import "./App.css"
+
 import React from "react"
 import SplitPane, { Pane } from "react-split-pane-next"
 
-import "./App.css"
-import { useAppSelector } from "./app/hooks"
+import { useAppSelector } from "./common/hooks/hooks"
 import { Map } from "./components/Map/Map"
-import { Orders } from "./features/orders/Orders"
+import { Orders } from "./components/Orders/Orders"
+import { OrdersState } from "./redux/orders/ordersSlice"
 
 function App() {
-  const error: string | undefined = useAppSelector(
-    (state) => state.orders.errorMessage,
+  const { errorMessage, fetchStatus }: OrdersState = useAppSelector(
+    (state) => state.orders,
   )
 
   return (
@@ -16,15 +18,17 @@ function App() {
       {/* @ts-ignore */}
       <SplitPane split="vertical">
         {/* @ts-ignore */}
-        <Pane minSize={"200"}>
+        <Pane minSize={"300px"}>
           <Orders />
         </Pane>
         {/* @ts-ignore */}
-        <Pane>
+        <Pane minSize={"300px"}>
           <Map />
         </Pane>
       </SplitPane>
-      {error && <span className={"error"}>{error}</span>}
+      {fetchStatus === "failed" && (
+        <span className={"error"}>{errorMessage}</span>
+      )}
     </>
   )
 }

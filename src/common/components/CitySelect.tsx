@@ -1,7 +1,7 @@
 import { Select } from "antd"
 import React from "react"
 
-import { useAppSelector } from "../../app/hooks"
+import { useAppSelector } from "../hooks/hooks"
 
 export interface CitySelectProps {
   item: number

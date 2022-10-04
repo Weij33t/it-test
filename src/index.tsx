@@ -1,10 +1,11 @@
+import "./index.css"
+
 import React from "react"
 import { createRoot } from "react-dom/client"
 import { Provider } from "react-redux"
 
 import App from "./App"
-import { store } from "./app/store"
-import "./index.css"
+import { store } from "./redux/store"
 import reportWebVitals from "./reportWebVitals"
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

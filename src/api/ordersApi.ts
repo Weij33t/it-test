@@ -1,4 +1,4 @@
-import { IOrder } from "../features/orders/ordersSlice"
+import { IOrder } from "../redux/orders/ordersSlice"
 import { orders } from "./orders"
 
 export const fetchOrders = async (): Promise<IOrder[]> => {
